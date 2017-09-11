@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import rx.Observable;
 
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -92,20 +93,25 @@ public class RxStartTest {
     public void testFlatMapDelayList() throws Exception {
         List<Integer> source = IntStream.range(1, 50).boxed().collect(Collectors.toList());
 
-        Observable.from(source).filter(
+        final SecureRandom random = new SecureRandom();
+
+        List<String> result = Observable.from(source).filter(
                 elem -> elem % 2 > 0
         ).map(
                 i -> i.toString()
         ).flatMap(
-                str -> Observable.timer(500, TimeUnit.MILLISECONDS).map(zero -> "Some async " + str + " string object")
+                str -> Observable.timer(random.nextInt(500), TimeUnit.MILLISECONDS).map(zero -> "Some async " + str + " string object")
         ).timeout(
                 5000,
                 TimeUnit.MILLISECONDS
         ).toList()
                 .toBlocking()
-                .single().forEach(str -> {
+                .single();
+
+        result.forEach(str -> {
             System.out.println("element of list:" + str);
         });
 
+        assertEquals(result.size(), 25);
     }
 }
