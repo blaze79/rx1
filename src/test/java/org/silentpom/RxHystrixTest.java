@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.silentpom.RxStart.*;
+import static org.silentpom.RxHystrix.*;
 
 /**
  * Created by Vlad on 11.09.2017.
  */
-public class RxStartTest {
+public class RxHystrixTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RxStartTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RxHystrixTest.class);
 
     /**
      * наивный тест, все работает

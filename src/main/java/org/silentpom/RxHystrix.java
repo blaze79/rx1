@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Vlad on 11.09.2017.
  */
-public class RxStart {
+public class RxHystrix {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RxStart.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RxHystrix.class);
 
     /**
      * создает список из observable, считая, что при отсутствии ошибок он будет порождать элемент не реже секунды
