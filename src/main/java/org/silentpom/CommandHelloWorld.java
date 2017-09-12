@@ -11,6 +11,8 @@ package org.silentpom;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.SecureRandom;
 
@@ -19,7 +21,8 @@ import java.security.SecureRandom;
  */
 public class CommandHelloWorld extends HystrixCommand<String> {
     private final String name;
-    final SecureRandom random = new SecureRandom();
+    private final SecureRandom random = new SecureRandom();
+    private static final Logger LOG = LoggerFactory.getLogger(CommandHelloWorld.class);
 
     public CommandHelloWorld(String name) {
         super(HystrixCommandGroupKey.Factory.asKey("ExampleGroup"));
@@ -28,9 +31,9 @@ public class CommandHelloWorld extends HystrixCommand<String> {
 
     @Override
     protected String run() throws InterruptedException {
-        System.out.println("Command start: " + name);
+        LOG.info("Command start: {}", name);
         Thread.sleep(random.nextInt(500));
-        System.out.println("Command finished: " + name);
+        LOG.info("Command calculation finished: {}", name);
         return "Hello " + name + "!";
     }
 }
