@@ -99,8 +99,12 @@ public class RxStartTest {
                 elem -> elem % 2 > 0
         ).map(
                 i -> i.toString()
-        ).flatMap(
-                str -> Observable.timer(random.nextInt(500), TimeUnit.MILLISECONDS).map(zero -> "Some async " + str + " string object")
+        )
+                .concatMap(
+                str -> Observable.timer(random.nextInt(500), TimeUnit.MILLISECONDS).map(zero -> {
+                    System.out.println(Thread.currentThread().getName());
+                    return "Some async " + str + " string object";
+                })
         ).timeout(
                 5000,
                 TimeUnit.MILLISECONDS
